@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOR JEWELL</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('sakura.gif') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .envelope-container {
+      z-index: 1;
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      background: url('love.gif') no-repeat center/cover;
+      border: 2px solid #d1b7a1;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .envelope.open {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .messages {
+      display: none;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #d1b7a1;
+      border-radius: 12px;
+      padding: 20px;
+      width: 300px;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .message {
+      display: none;
+      font-size: 18px;
+      color: #5a3d31;
+      margin-bottom: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .button {
+      background: linear-gradient(45deg, #d1b7a1, #b09482);
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 15px;
+      transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    .button:hover {
+      background: linear-gradient(45deg, #b09482, #d1b7a1);
+    }
+
+    .button:active {
+      transform: scale(1.1);
+    }
+
+    .gif-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .gif {
+      cursor: pointer;
+      width: 220px;
+      height: 220px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .gif:hover {
+      transform: scale(1.05);
+    }
+
+    .message-container {
+      display: none;
+      font-size: 18px;
+      color: #5a3d31;
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .message-container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .envelope {
+        width: 250px;
+        height: 150px;
+      }
+      .messages {
+        width: 90%;
+      }
+      .message {
+        font-size: 16px;
+      }
+      .button {
+        padding: 10px 20px;
+      }
+      .gif {
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope-container">
+    <div class="envelope" onclick="openEnvelope()"></div>
+    <div class="messages">
+      <div class="message" id="message1">"You taught me how to risk again, so I did risk for you."</div>
+      <div class="message" id="message2">"Every moment, bonding and just hearing your voice makes me happy."</div>
+      <div class="message" id="message3">"This is just a reminder, That I Love you still and will always be."</div>
+      <button class="button" onclick="showNextMessage()">Unfold Next Message</button>
+      <button class="button" onclick="resetEnvelope()">Close</button>
+    </div>
+  </div>
+
+  <div class="gif-container">
+    <img src="letter.gif" alt="Letter GIF" class="gif" onclick="showSecondGif()">
+    <img src="letter1.gif" alt="Second Letter GIF" class="gif" style="display:none;" onclick="showMessage()">
+    <div class="message-container" id="gifMessage">I love spanking your butt!</div>
+  </div>
+
+  <script>
+    let currentMessage = 1;
+
+    function openEnvelope() {
+      const envelope = document.querySelector('.envelope');
+      envelope.classList.add('open');
+
+      const messageContainer = document.querySelector('.messages');
+      messageContainer.style.display = 'block';
+      document.getElementById('message1').style.display = 'block'; // Show first message
+      setTimeout(() => {
+        document.getElementById('message1').classList.add('show');
+      }, 100); // Add delay for animation
+    }
+
+    function showNextMessage() {
+      currentMessage++;
+      if (currentMessage <= 3) {
+        const nextMessage = document.getElementById(`message${currentMessage}`);
+        nextMessage.style.display = 'block'; // Show the next message
+        setTimeout(() => {
+          nextMessage.classList.add('show'); // Apply animation
+        }, 100);
+      }
+      if (currentMessage === 3) {
+        document.querySelector('.button[onclick="showNextMessage()"]').style.display = 'none';
+      }
+    }
+
+    function resetEnvelope() {
+      document.querySelector('.messages').style.display = 'none';
+      document.querySelector('.envelope').classList.remove('open');
+      document.querySelectorAll('.message').forEach(msg => {
+        msg.classList.remove('show');
+        msg.style.display = 'none'; // Hide all messages
+      });
+      currentMessage = 1;
+      document.querySelector('.button[onclick="showNextMessage()"]').style.display = 'inline-block';
+    }
+
+    function showSecondGif() {
+      document.querySelectorAll('.gif')[0].style.display = 'none';
+      document.querySelectorAll('.gif')[1].style.display = 'block';
+    }
+
+    function showMessage() {
+      const messageContainer = document.getElementById('gifMessage');
+      messageContainer.style.display = 'block';
+      setTimeout(() => {
+        messageContainer.classList.add('show');
+      }, 100); // Add delay for animation
+    }
+  </script>
+</body>
+</html>
